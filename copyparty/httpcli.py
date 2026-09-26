@@ -1477,6 +1477,13 @@ class HttpCli(object):
             self.tx_404()
             return False
 
+        # this block allow to load service worker with full scope
+        # another alternative is change the scope via header
+        if self.vpath == "sw.js":
+            res_path = "web/" + self.vpath
+            return self.tx_res(res_path)
+
+        self.log("aca no")
         if "cf_challenge" in self.uparam:
             self.reply(self.j2s("cf").encode("utf-8", "replace"))
             return True
